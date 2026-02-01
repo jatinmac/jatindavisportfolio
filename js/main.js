@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (storedTheme === "light" || storedTheme === "dark") {
     root.setAttribute("data-theme", storedTheme);
   } else {
-    root.setAttribute("data-theme", "dark");
+    root.setAttribute("data-theme", "light");
   }
 
   function setTheme(theme) {
