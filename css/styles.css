@@ -1,0 +1,577 @@
+/* Design tokens and core theme colors. */
+:root {
+  color-scheme: light dark;
+  --font-main: "Inter", sans-serif;
+  --page-bg: #ffffff;
+  --text-main: #18181b;
+  --text-secondary: #27272a;
+  --text-muted: #52525b;
+  --text-light: #71717a;
+  --nav-pill: #f4f4f5;
+  --border-dark: #605d64;
+  --border-light: #e4e4e7;
+  --button-primary: #18181b;
+  --button-text: #ffffff;
+  --button-subtle-bg: #f4f4f5;
+  --button-subtle-text: #27272a;
+}
+
+/* Basic reset to ensure sizing is predictable. */
+* {
+  box-sizing: border-box;
+}
+
+/* Body defaults for typography and background. */
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background: var(--page-bg);
+  color: var(--text-main);
+  letter-spacing: 0.01em;
+}
+
+/* Links inherit text color, with styling handled per component. */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Central column sizing to match the Figma frame width. */
+.page {
+  width: min(652px, 100%);
+  margin: 0 auto;
+  padding: 200px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+}
+
+/* Fixed navigation bar that stays pinned while scrolling. */
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(652px, 100%);
+  padding: 16px 24px;
+  background: var(--page-bg);
+  z-index: 10;
+}
+
+/* Mobile menu toggle icon (hidden on desktop). */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.nav-toggle__icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* Mobile nav list (hidden on desktop). */
+.mobile-nav {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0 0;
+}
+
+.mobile-nav__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.mobile-nav__item:hover,
+.mobile-nav__item:focus-visible {
+  background: var(--nav-pill);
+  color: var(--text-main);
+  outline: none;
+}
+
+/* Individual nav items styled as pill buttons. */
+.nav-item {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  font-size: 16px;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+
+/* Hover and keyboard focus states for navigation. */
+.nav-item:hover,
+.nav-item:focus-visible {
+  background: var(--nav-pill);
+  color: var(--text-main);
+  outline: none;
+}
+
+/* Hero section layout spacing. */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Project page hero area with media and CTA buttons. */
+.project-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+/* Project hero heading from Figma. */
+.project-hero__title {
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  max-width: 652px;
+  margin: 0;
+}
+
+/* Placeholder for project media or screenshots. */
+.project-hero__media {
+  width: 100%;
+  aspect-ratio: 652 / 368.683;
+  background: #d9d9d9;
+}
+
+/* Button group spacing for project CTAs. */
+.button-group--justify {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+/* Project detail sections. */
+.project-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.project-section ul {
+  margin: 0;
+  padding-left: 24px;
+  color: var(--text-muted);
+}
+
+.project-section li {
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 6px;
+}
+
+/* Breadcrumbs for project pages. */
+.breadcrumbs {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-light);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.breadcrumbs a {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus-visible {
+  color: var(--text-main);
+  outline: none;
+}
+
+/* Hero text block spacing. */
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* H1 matches Figma display style. */
+h1 {
+  font-size: 40px;
+  line-height: 52px;
+  letter-spacing: -0.01em;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* H2 matches section headers. */
+h2 {
+  font-size: 24px;
+  line-height: 36px;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* H3 matches item titles. */
+h3 {
+  font-size: 24px;
+  line-height: 36px;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* Project title links expand slightly on hover for emphasis. */
+.project-link {
+  display: inline-block;
+  color: inherit;
+  padding-right: 0;
+  transition: padding-right 0.2s ease, transform 0.2s ease;
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  font-weight: 600;
+  transform: translateX(2px);
+  outline: none;
+}
+
+/* Base paragraph styling for body copy. */
+p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-muted);
+}
+
+/* Grouped button container in hero section. */
+.button-group {
+  display: flex;
+  gap: 12px;
+}
+
+/* Base button style used for both variants. */
+.btn {
+  border: 0;
+  border-radius: 0px;
+  padding: 10px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+}
+
+/* Subtle button variant for secondary action. */
+.btn--subtle {
+  background: var(--button-subtle-bg);
+  color: var(--button-subtle-text);
+  border-radius: 0;
+}
+
+/* Primary button variant for main action. */
+.btn--primary {
+  background: var(--button-primary);
+  color: var(--button-text);
+  border-radius: 0;
+}
+
+/* Shared hover and focus treatment for buttons. */
+.btn:hover,
+.btn:focus-visible {
+  filter: brightness(0.95);
+  outline: none;
+}
+
+/* About list spacing and typography. */
+.about ul {
+  margin: 0;
+  padding-left: 24px;
+  color: var(--text-muted);
+}
+
+/* About list item spacing. */
+.about li {
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 6px;
+}
+
+/* Two-column split layout for work and projects. */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* Right column stack of experience/project cards. */
+.split-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Experience and education card grouping. */
+.experience,
+.education-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Title + duration block. */
+.experience-meta,
+.education-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Duration text style. */
+.experience-meta span,
+.education-meta span {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-light);
+  letter-spacing: 0.01em;
+}
+
+/* Contact form layout spacing. */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+/* Labels style the field titles. */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+/* Inputs match the minimal line-height in the design. */
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border-light);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-family: var(--font-main);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Allow multi-line input to be resized vertically. */
+textarea {
+  resize: vertical;
+}
+
+/* Form actions align the submit button to the right. */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Footer layout with top border and split columns. */
+.site-footer {
+  border-top: 1px solid var(--border-dark);
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Footer headline style matches section headings. */
+.site-footer p {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Footer link stack styling. */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-muted);
+}
+
+/* Footer links get pill hover states like the nav. */
+.footer-links a {
+  border-radius: 6px;
+  padding: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Hover and focus for footer links. */
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  background: var(--nav-pill);
+  color: var(--text-main);
+  outline: none;
+}
+
+/* Footer phone number padding to align with links. */
+.footer-links span {
+  padding: 8px;
+}
+
+/* Mobile layout adjustments for narrow screens. */
+@media (max-width: 720px) {
+  .page {
+    padding: 88px 20px 64px;
+    gap: 80px;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 16px 20px;
+    gap: 0;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav.is-open .mobile-nav {
+    display: flex;
+  }
+
+  .nav-item {
+    display: none;
+    flex: 0 1 auto;
+    padding: 10px 14px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .button-group--justify {
+    align-items: flex-start;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer {
+    flex-direction: column;
+  }
+}
+
+/* Dark mode overrides keep contrast acceptable. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #0f0f10;
+    --text-main: #f4f4f5;
+    --text-secondary: #d4d4d8;
+    --text-muted: #a1a1aa;
+    --text-light: #a1a1aa;
+    --nav-pill: #18181b;
+    --border-dark: #3f3f46;
+    --border-light: #27272a;
+    --button-primary: #f4f4f5;
+    --button-text: #18181b;
+    --button-subtle-bg: #18181b;
+    --button-subtle-text: #f4f4f5;
+  }
+
+  /* Form fields get a darker background in dark mode. */
+  input,
+  textarea {
+    background: #18181b;
+    color: var(--text-main);
+    border-radius: 0px;
+  }
+}
+
+/* Explicit theme overrides take precedence over system preference. */
+[data-theme="light"] {
+  color-scheme: light;
+  --page-bg: #ffffff;
+  --text-main: #18181b;
+  --text-secondary: #27272a;
+  --text-muted: #52525b;
+  --text-light: #71717a;
+  --nav-pill: #f4f4f5;
+  --border-dark: #605d64;
+  --border-light: #e4e4e7;
+  --button-primary: #18181b;
+  --button-text: #ffffff;
+  --button-subtle-bg: #f4f4f5;
+  --button-subtle-text: #27272a;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: #0f0f10;
+  --text-main: #f4f4f5;
+  --text-secondary: #d4d4d8;
+  --text-muted: #a1a1aa;
+  --text-light: #a1a1aa;
+  --nav-pill: #18181b;
+  --border-dark: #3f3f46;
+  --border-light: #27272a;
+  --button-primary: #f4f4f5;
+  --button-text: #18181b;
+  --button-subtle-bg: #18181b;
+  --button-subtle-text: #f4f4f5;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  background: #18181b;
+  color: var(--text-main);
+  border-radius: 0px;
+}
