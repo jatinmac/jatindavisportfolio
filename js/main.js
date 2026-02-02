@@ -86,4 +86,46 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+  var welcomeModal = document.querySelector(".welcome-modal");
+  if (welcomeModal) {
+    var hasSeenWelcome = window.localStorage
+      ? localStorage.getItem("hasSeenWelcomeModal")
+      : "true";
+
+    function hideWelcomeModal() {
+      welcomeModal.classList.remove("is-visible");
+      welcomeModal.setAttribute("aria-hidden", "true");
+    }
+
+    function showWelcomeModal() {
+      welcomeModal.classList.add("is-visible");
+      welcomeModal.setAttribute("aria-hidden", "false");
+      if (window.localStorage) {
+        localStorage.setItem("hasSeenWelcomeModal", "true");
+      }
+      var closeButton = welcomeModal.querySelector(".welcome-modal__close");
+      if (closeButton) {
+        closeButton.focus();
+      }
+    }
+
+    if (hasSeenWelcome !== "true") {
+      showWelcomeModal();
+    }
+
+    welcomeModal.addEventListener("click", function (event) {
+      var target = event.target;
+      if (target && target.hasAttribute("data-modal-close")) {
+        hideWelcomeModal();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        hideWelcomeModal();
+      }
+    });
+  }
 });
+
