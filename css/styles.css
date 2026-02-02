@@ -494,7 +494,7 @@ textarea {
   position: relative;
   background: var(--page-bg);
   color: var(--text-main);
-  border-radius: 16px;
+  border-radius: 0;
   padding: 28px 36px 24px;
   width: min(560px, calc(100% - 32px));
   text-align: center;
@@ -518,6 +518,12 @@ textarea {
   height: 1px;
   background: var(--border-light);
   margin: 0 0 16px;
+}
+
+.welcome-modal__actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .welcome-modal__close {
