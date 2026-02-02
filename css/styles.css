@@ -10,6 +10,7 @@
   --nav-pill: #f4f4f5;
   --border-dark: #605d64;
   --border-light: #e4e4e7;
+  --input-bg: #ffffff;
   --button-primary: #18181b;
   --button-text: #ffffff;
   --button-subtle-bg: #f4f4f5;
@@ -399,6 +400,8 @@ input,
 textarea {
   width: 100%;
   border: 1px solid var(--border-light);
+  background: var(--input-bg);
+  color: var(--text-main);
   padding: 10px 12px;
   border-radius: 4px;
   font-family: var(--font-main);
@@ -521,6 +524,7 @@ textarea {
     --nav-pill: #18181b;
     --border-dark: #3f3f46;
     --border-light: #27272a;
+    --input-bg: #18181b;
     --button-primary: #f4f4f5;
     --button-text: #18181b;
     --button-subtle-bg: #18181b;
@@ -530,8 +534,6 @@ textarea {
   /* Form fields get a darker background in dark mode. */
   input,
   textarea {
-    background: #18181b;
-    color: var(--text-main);
     border-radius: 0px;
   }
 }
@@ -547,6 +549,7 @@ textarea {
   --nav-pill: #f4f4f5;
   --border-dark: #605d64;
   --border-light: #e4e4e7;
+  --input-bg: #ffffff;
   --button-primary: #18181b;
   --button-text: #ffffff;
   --button-subtle-bg: #f4f4f5;
@@ -563,6 +566,7 @@ textarea {
   --nav-pill: #18181b;
   --border-dark: #3f3f46;
   --border-light: #27272a;
+  --input-bg: #18181b;
   --button-primary: #f4f4f5;
   --button-text: #18181b;
   --button-subtle-bg: #18181b;
@@ -571,7 +575,5 @@ textarea {
 
 [data-theme="dark"] input,
 [data-theme="dark"] textarea {
-  background: #18181b;
-  color: var(--text-main);
   border-radius: 0px;
 }
