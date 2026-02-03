@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("is-ready");
 
   var root = document.documentElement;
+  var audioCtx = null;
   var themeToggle = document.querySelector(".theme-toggle");
   var storedTheme = window.localStorage ? localStorage.getItem("theme") : null;
 
@@ -34,6 +35,40 @@ document.addEventListener("DOMContentLoaded", function () {
       setTheme(nextTheme);
     });
   }
+
+  function getAudioContext() {
+    if (!audioCtx) {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) {
+        return null;
+      }
+      audioCtx = new Ctx();
+    }
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  function playClickBeep() {
+    var ctx = getAudioContext();
+    if (!ctx) {
+      return;
+    }
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.value = 900;
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.07);
+  }
+
+  document.addEventListener("click", playClickBeep, true);
 
   var isProjectPage = window.location.pathname.indexOf("/projects/") !== -1;
   var prefix = isProjectPage ? "../" : "";
@@ -128,4 +163,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-

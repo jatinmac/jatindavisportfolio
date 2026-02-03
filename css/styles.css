@@ -149,6 +149,7 @@ a {
   background: var(--nav-pill);
   color: var(--text-main);
   outline: none;
+  border-radius: 0;
 }
 
 /* Hero section layout spacing. */
