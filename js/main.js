@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     root.setAttribute("data-theme", theme);
     themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+    themeToggle.setAttribute(
+      "aria-label",
+      theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+    );
     themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
 
     if (window.localStorage) {
@@ -85,11 +89,54 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  var animatedItems = document.querySelectorAll(
+    ".hero, .about, .split, .contact, .site-footer, .experience, .education-item, .project-hero, .project-section"
+  );
+
+  Array.prototype.forEach.call(animatedItems, function (item) {
+    item.setAttribute("data-animate", "");
+  });
+
+  if ("IntersectionObserver" in window) {
+    var revealObserver = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    Array.prototype.forEach.call(animatedItems, function (item) {
+      revealObserver.observe(item);
+    });
+  } else {
+    Array.prototype.forEach.call(animatedItems, function (item) {
+      item.classList.add("is-visible");
+    });
+  }
+
+  function updateScrollEffects() {
+    var doc = document.documentElement;
+    var scrollTop = window.scrollY || doc.scrollTop;
+    var maxScroll = doc.scrollHeight - window.innerHeight;
+    var progress = maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
+    var heroShift = Math.min(scrollTop * -0.03, 0);
+
+    root.style.setProperty("--scroll-progress", progress.toFixed(4));
+    root.style.setProperty("--hero-shift", heroShift.toFixed(2));
+  }
+
+  updateScrollEffects();
+  window.addEventListener("scroll", updateScrollEffects, { passive: true });
+  window.addEventListener("resize", updateScrollEffects);
+
   var welcomeModal = document.querySelector(".welcome-modal");
   if (welcomeModal) {
-    var hasSeenWelcome = window.localStorage
-      ? localStorage.getItem("hasSeenWelcomeModal")
-      : "true";
+    var hasSeenWelcome = window.localStorage ? localStorage.getItem("hasSeenWelcomeModal") : "true";
 
     function hideWelcomeModal() {
       welcomeModal.classList.remove("is-visible");
