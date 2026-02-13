@@ -1,9 +1,7 @@
-// Add a class once the DOM is ready so styles can hook into it if needed.
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("is-ready");
 
   var root = document.documentElement;
-  var audioCtx = null;
   var themeToggle = document.querySelector(".theme-toggle");
   var storedTheme = window.localStorage ? localStorage.getItem("theme") : null;
 
@@ -17,58 +15,23 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!themeToggle) {
       return;
     }
+
     root.setAttribute("data-theme", theme);
     themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
-    themeToggle.textContent = theme === "dark" ? "☀️" : "🌜";
+    themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+
     if (window.localStorage) {
       localStorage.setItem("theme", theme);
     }
   }
 
   if (themeToggle) {
-    var activeTheme = root.getAttribute("data-theme");
-    themeToggle.setAttribute("aria-pressed", activeTheme === "dark" ? "true" : "false");
-    themeToggle.textContent = activeTheme === "dark" ? "☀️" : "🌜";
-
+    setTheme(root.getAttribute("data-theme"));
     themeToggle.addEventListener("click", function () {
       var nextTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       setTheme(nextTheme);
     });
   }
-
-  function getAudioContext() {
-    if (!audioCtx) {
-      var Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) {
-        return null;
-      }
-      audioCtx = new Ctx();
-    }
-    if (audioCtx.state === "suspended") {
-      audioCtx.resume();
-    }
-    return audioCtx;
-  }
-
-  function playClickBeep() {
-    var ctx = getAudioContext();
-    if (!ctx) {
-      return;
-    }
-    var osc = ctx.createOscillator();
-    var gain = ctx.createGain();
-
-    osc.type = "sine";
-    osc.frequency.value = 900;
-    gain.gain.setValueAtTime(0.12, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
-
-    osc.connect(gain).connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.07);
-  }
-
-  document.addEventListener("click", playClickBeep, true);
 
   var isProjectPage = window.location.pathname.indexOf("/projects/") !== -1;
   var prefix = isProjectPage ? "../" : "";
@@ -76,16 +39,16 @@ document.addEventListener("DOMContentLoaded", function () {
     '<div class="mobile-nav" aria-label="Mobile" aria-hidden="true">' +
     '<a class="mobile-nav__item" href="' +
     prefix +
-    'index.html#home">🏠 Home</a>' +
+    'index.html#home">Home</a>' +
     '<a class="mobile-nav__item" href="' +
     prefix +
-    'index.html#projects">💼 Work</a>' +
+    'index.html#projects">Work</a>' +
     '<a class="mobile-nav__item" href="' +
     prefix +
-    'index.html#contact">📞 Contact</a>' +
+    'index.html#contact">Contact</a>' +
     '<a class="mobile-nav__item" href="' +
     prefix +
-    'index.html#resume">📄 Resume</a>' +
+    'index.html#resume">Resume</a>' +
     "</div>";
 
   var navs = document.querySelectorAll(".site-nav");
