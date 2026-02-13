@@ -1,484 +1,361 @@
-/* Design tokens and core theme colors. */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --font-main: "Inter", sans-serif;
-  --page-bg: #ffffff;
-  --text-main: #18181b;
-  --text-secondary: #27272a;
-  --text-muted: #52525b;
-  --text-light: #71717a;
-  --nav-pill: #f4f4f5;
-  --border-dark: #605d64;
-  --border-light: #e4e4e7;
-  --input-bg: #ffffff;
-  --button-primary: #18181b;
+  --page-bg: #f1f3f4;
+  --surface-1: #ffffff;
+  --surface-2: #f8fafd;
+  --text-main: #202124;
+  --text-secondary: #3c4043;
+  --text-muted: #5f6368;
+  --text-light: #80868b;
+  --accent: #1a73e8;
+  --accent-hover: #1557b0;
+  --border-light: #dadce0;
+  --border-dark: #c4c7c5;
   --button-text: #ffffff;
-  --button-subtle-bg: #f4f4f5;
-  --button-subtle-text: #27272a;
+  --shadow-soft: 0 1px 2px rgba(60, 64, 67, 0.2), 0 2px 6px 2px rgba(60, 64, 67, 0.12);
+  --shadow-elevated: 0 2px 6px rgba(60, 64, 67, 0.28), 0 8px 24px rgba(60, 64, 67, 0.18);
 }
 
-/* Basic reset to ensure sizing is predictable. */
 * {
   box-sizing: border-box;
 }
 
-/* Body defaults for typography and background. */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: var(--font-main);
-  background: var(--page-bg);
+  background:
+    radial-gradient(circle at 10% -10%, #d2e3fc 0%, transparent 45%),
+    radial-gradient(circle at 90% 5%, #e8f0fe 0%, transparent 36%),
+    var(--page-bg);
   color: var(--text-main);
-  letter-spacing: 0.01em;
 }
 
-/* Links inherit text color, with styling handled per component. */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Central column sizing to match the Figma frame width. */
 .page {
-  width: min(652px, 100%);
+  width: min(980px, 100%);
   margin: 0 auto;
-  padding: 200px 24px 80px;
+  padding: 120px 24px 72px;
   display: flex;
   flex-direction: column;
-  gap: 120px;
+  gap: 44px;
 }
 
-/* Fixed navigation bar that stays pinned while scrolling. */
 .site-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
   position: fixed;
-  top: 0;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(652px, 100%);
-  padding: 16px 24px;
-  background: var(--page-bg);
-  z-index: 10;
-}
-
-/* Mobile menu toggle icon (hidden on desktop). */
-.nav-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 24px;
-  line-height: 24px;
-}
-
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 20px;
-  line-height: 24px;
-}
-
-.theme-toggle:focus-visible {
-  outline: 2px solid var(--text-main);
-  outline-offset: 2px;
-}
-
-.nav-toggle__icon {
-  width: 24px;
-  height: 24px;
-  display: block;
-}
-
-/* Mobile nav list (hidden on desktop). */
-.mobile-nav {
-  display: none;
-  width: 100%;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px 0 0;
-}
-
-.mobile-nav__item {
+  width: min(980px, calc(100% - 24px));
+  z-index: 20;
   display: flex;
   align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-1) 84%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border-light) 78%, transparent);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+}
+
+.nav-toggle,
+.theme-toggle {
+  display: none;
+  align-items: center;
   justify-content: center;
-  padding: 12px;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.16px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
   color: var(--text-secondary);
-  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
 }
 
-.mobile-nav__item:hover,
-.mobile-nav__item:focus-visible {
-  background: var(--nav-pill);
-  color: var(--text-main);
-  outline: none;
-}
-
-/* Individual nav items styled as pill buttons. */
 .nav-item {
   flex: 1;
   text-align: center;
-  padding: 12px;
-  font-size: 16px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text-secondary);
-  border-radius: 6px;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-
-/* Hover and keyboard focus states for navigation. */
+.nav-item--active,
 .nav-item:hover,
-.nav-item:focus-visible {
-  background: var(--nav-pill);
+.nav-item:focus-visible,
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+  background: var(--surface-2);
   color: var(--text-main);
   outline: none;
-  border-radius: 0;
 }
 
-/* Hero section layout spacing. */
+.hero,
+.about,
+.split,
+.contact,
+.site-footer {
+  background: var(--surface-1);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  padding: 32px;
+}
+
 .hero {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 22px;
 }
 
-/* Project page hero area with media and CTA buttons. */
-.project-hero {
+.hero-copy {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  width: 100%;
+  gap: 12px;
 }
 
-/* Project hero heading from Figma. */
-.project-hero__title {
-  font-size: 40px;
-  line-height: 52px;
+h1 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.35;
   font-weight: 600;
-  letter-spacing: -0.4px;
-  max-width: 652px;
+}
+
+p {
   margin: 0;
-}
-
-/* Placeholder for project media or screenshots. */
-.project-hero__media {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  aspect-ratio: auto;
-  background: transparent;
-}
-
-/* Button group spacing for project CTAs. */
-.button-group--justify {
-  width: 100%;
-  justify-content: flex-start;
-  gap: 16px;
-}
-
-/* Project detail sections. */
-.project-section {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-.project-section ul {
-  margin: 0;
-  padding-left: 24px;
   color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-.project-section li {
-  font-size: 16px;
-  line-height: 24px;
-  margin-bottom: 6px;
-}
-
-/* Breadcrumbs for project pages. */
-.breadcrumbs {
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--text-light);
+.button-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 12px;
 }
 
-.breadcrumbs a {
-  color: inherit;
-  transition: color 0.2s ease;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.breadcrumbs a:hover,
-.breadcrumbs a:focus-visible {
+.btn--primary {
+  background: var(--accent);
+  color: var(--button-text);
+  box-shadow: 0 1px 2px rgba(26, 115, 232, 0.4);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.btn--subtle {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-light);
+}
+
+.btn--subtle:hover,
+.btn--subtle:focus-visible {
+  background: var(--surface-2);
   color: var(--text-main);
   outline: none;
 }
 
-/* Hero text block spacing. */
-.hero-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* H1 matches Figma display style. */
-h1 {
-  font-size: 40px;
-  line-height: 52px;
-  letter-spacing: -0.01em;
+.about ul,
+.project-section ul {
   margin: 0;
-  font-weight: 600;
-}
-
-/* H2 matches section headers. */
-h2 {
-  font-size: 24px;
-  line-height: 36px;
-  margin: 0;
-  font-weight: 600;
-}
-
-/* H3 matches item titles. */
-h3 {
-  font-size: 24px;
-  line-height: 36px;
-  margin: 0;
-  font-weight: 300;
-}
-
-/* Project title links expand slightly on hover for emphasis. */
-.project-link {
-  display: inline-block;
-  color: inherit;
-  padding-right: 0;
-  transition: padding-right 0.2s ease, transform 0.2s ease;
-}
-
-.project-link:hover,
-.project-link:focus-visible {
-  font-weight: 600;
-  transform: translateX(2px);
-  outline: none;
-}
-
-/* Base paragraph styling for body copy. */
-p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 24px;
+  padding-left: 22px;
   color: var(--text-muted);
 }
 
-/* Grouped button container in hero section. */
-.button-group {
-  display: flex;
-  gap: 12px;
+.about li,
+.project-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
 }
 
-/* Base button style used for both variants. */
-.btn {
-  border: 0;
-  border-radius: 0px;
-  padding: 10px 16px;
-  font-size: 14px;
-  line-height: 20px;
-  cursor: pointer;
-  letter-spacing: 0.01em;
-}
-
-/* Subtle button variant for secondary action. */
-.btn--subtle {
-  background: var(--button-subtle-bg);
-  color: var(--button-subtle-text);
-  border-radius: 0;
-}
-
-/* Primary button variant for main action. */
-.btn--primary {
-  background: var(--button-primary);
-  color: var(--button-text);
-  border-radius: 0;
-}
-
-/* Shared hover and focus treatment for buttons. */
-.btn:hover,
-.btn:focus-visible {
-  filter: brightness(0.95);
-  outline: none;
-}
-
-/* About list spacing and typography. */
-.about ul {
-  margin: 0;
-  padding-left: 24px;
-  color: var(--text-muted);
-}
-
-/* About list item spacing. */
-.about li {
-  font-size: 16px;
-  line-height: 24px;
-  margin-bottom: 6px;
-}
-
-/* Two-column split layout for work and projects. */
 .split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
+  gap: 28px;
 }
 
-/* Right column stack of experience/project cards. */
 .split-list {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  display: grid;
+  gap: 14px;
 }
 
-/* Experience and education card grouping. */
 .experience,
 .education-item {
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  background: var(--surface-2);
+  padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-/* Title + duration block. */
 .experience-meta,
 .education-meta {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 2px;
 }
 
-/* Duration text style. */
 .experience-meta span,
 .education-meta span {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 13px;
   color: var(--text-light);
-  letter-spacing: 0.01em;
 }
 
-/* Contact form layout spacing. */
+.project-link {
+  color: var(--accent);
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  outline: none;
+}
+
 .contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 8px;
+  display: grid;
+  gap: 14px;
 }
 
-/* Labels style the field titles. */
 label {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 6px;
-  font-size: 14px;
-  line-height: 20px;
   color: var(--text-secondary);
+  font-size: 14px;
 }
 
-/* Inputs match the minimal line-height in the design. */
 input,
 textarea {
   width: 100%;
   border: 1px solid var(--border-light);
-  background: var(--input-bg);
+  border-radius: 12px;
+  background: var(--surface-1);
   color: var(--text-main);
-  padding: 10px 12px;
-  border-radius: 4px;
-  font-family: var(--font-main);
-  font-size: 14px;
-  line-height: 20px;
+  font: inherit;
+  padding: 11px 12px;
 }
 
-/* Allow multi-line input to be resized vertically. */
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  outline-offset: 1px;
+}
+
 textarea {
   resize: vertical;
+  min-height: 120px;
 }
 
-/* Form actions align the submit button to the right. */
 .form-actions {
   display: flex;
   justify-content: flex-end;
 }
 
-/* Footer layout with top border and split columns. */
 .site-footer {
-  border-top: 1px solid var(--border-dark);
-  padding-top: 32px;
   display: flex;
   justify-content: space-between;
-  gap: 32px;
+  align-items: flex-start;
+  gap: 24px;
 }
 
-/* Footer headline style matches section headings. */
 .site-footer p {
-  font-size: 24px;
-  line-height: 36px;
-  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.4;
   color: var(--text-main);
 }
 
-/* Footer link stack styling. */
 .footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  font-size: 16px;
-  line-height: 24px;
+  display: grid;
+  gap: 10px;
   color: var(--text-muted);
 }
 
-/* Footer links get pill hover states like the nav. */
 .footer-links a {
-  border-radius: 6px;
-  padding: 8px;
-  transition: background 0.2s ease, color 0.2s ease;
+  color: var(--accent);
 }
 
-/* Hover and focus for footer links. */
 .footer-links a:hover,
 .footer-links a:focus-visible {
-  background: var(--nav-pill);
-  color: var(--text-main);
+  color: var(--accent-hover);
+  text-decoration: underline;
   outline: none;
 }
 
-/* Footer phone number padding to align with links. */
-.footer-links span {
-  padding: 8px;
+.mobile-nav {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
 }
 
-/* Welcome modal styles. */
+.mobile-nav__item {
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.mobile-nav__item:hover,
+.mobile-nav__item:focus-visible {
+  background: var(--surface-2);
+  outline: none;
+}
+
 .welcome-modal {
   position: fixed;
   inset: 0;
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 20;
+  z-index: 40;
 }
 
 .welcome-modal.is-visible {
@@ -488,95 +365,126 @@ textarea {
 .welcome-modal__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(10, 10, 12, 0.45);
+  background: rgba(32, 33, 36, 0.5);
 }
 
 .welcome-modal__card {
   position: relative;
-  background: var(--page-bg);
-  color: var(--text-main);
-  border-radius: 0;
-  padding: 28px 36px 24px;
-  width: min(560px, calc(100% - 32px));
+  width: min(540px, calc(100% - 24px));
+  background: var(--surface-1);
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-elevated);
+  padding: 30px;
   text-align: center;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
-}
-
-.welcome-modal__card h2 {
-  font-size: 32px;
-  line-height: 40px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.welcome-modal__card p {
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--text-muted);
-}
-
-.welcome-modal__rule {
-  height: 1px;
-  background: var(--border-light);
-  margin: 0 0 16px;
-}
-
-.welcome-modal__actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .welcome-modal__close {
   position: absolute;
   top: 10px;
-  right: 12px;
-  width: 32px;
-  height: 32px;
+  right: 10px;
   border: 0;
   background: transparent;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
   color: var(--text-muted);
-  font-size: 22px;
-  line-height: 1;
   cursor: pointer;
+  font-size: 22px;
 }
 
+.welcome-modal__close:hover,
+.welcome-modal__close:focus-visible {
+  background: var(--surface-2);
+  outline: none;
+}
 
-/* Mobile layout adjustments for narrow screens. */
+.welcome-modal__rule {
+  margin: 16px 0;
+  height: 1px;
+  background: var(--border-light);
+}
+
+.welcome-modal__actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.project-hero,
+.project-section {
+  background: var(--surface-1);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-hero__title {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.2;
+}
+
+.project-hero__media {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+}
+
+.breadcrumbs {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+.breadcrumbs a {
+  color: var(--accent);
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus-visible {
+  color: var(--accent-hover);
+  outline: none;
+}
+
+.button-group--justify {
+  justify-content: flex-start;
+}
+
 @media (max-width: 720px) {
   .page {
-    padding: 88px 20px 64px;
-    gap: 80px;
+    padding: 92px 16px 56px;
+    gap: 24px;
   }
 
   .site-nav {
+    width: calc(100% - 16px);
     flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 16px 20px;
-    gap: 0;
   }
 
-  .nav-toggle {
+  .nav-toggle,
+  .theme-toggle {
     display: inline-flex;
+  }
+
+  .nav-item {
+    display: none;
   }
 
   .site-nav.is-open .mobile-nav {
     display: flex;
   }
 
-  .nav-item {
-    display: none;
-    flex: 0 1 auto;
-    padding: 10px 14px;
-  }
-
-  .button-group {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .button-group--justify {
-    align-items: flex-start;
+  .hero,
+  .about,
+  .split,
+  .contact,
+  .site-footer {
+    border-radius: 18px;
+    padding: 22px;
   }
 
   .split {
@@ -587,77 +495,25 @@ textarea {
     flex-direction: column;
   }
 
-  .welcome-modal__card {
-    padding: 24px 24px 20px;
+  .button-group {
+    flex-direction: column;
+    align-items: stretch;
   }
-
-  .welcome-modal__card h2 {
-    font-size: 26px;
-    line-height: 34px;
-  }
-}
-
-/* Dark mode overrides keep contrast acceptable. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --page-bg: #0f0f10;
-    --text-main: #f4f4f5;
-    --text-secondary: #d4d4d8;
-    --text-muted: #a1a1aa;
-    --text-light: #a1a1aa;
-    --nav-pill: #18181b;
-    --border-dark: #3f3f46;
-    --border-light: #27272a;
-    --input-bg: #18181b;
-    --button-primary: #f4f4f5;
-    --button-text: #18181b;
-    --button-subtle-bg: #18181b;
-    --button-subtle-text: #f4f4f5;
-  }
-
-  /* Form fields get a darker background in dark mode. */
-  input,
-  textarea {
-    border-radius: 0px;
-  }
-}
-
-/* Explicit theme overrides take precedence over system preference. */
-[data-theme="light"] {
-  color-scheme: light;
-  --page-bg: #ffffff;
-  --text-main: #18181b;
-  --text-secondary: #27272a;
-  --text-muted: #52525b;
-  --text-light: #71717a;
-  --nav-pill: #f4f4f5;
-  --border-dark: #605d64;
-  --border-light: #e4e4e7;
-  --input-bg: #ffffff;
-  --button-primary: #18181b;
-  --button-text: #ffffff;
-  --button-subtle-bg: #f4f4f5;
-  --button-subtle-text: #27272a;
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --page-bg: #0f0f10;
-  --text-main: #f4f4f5;
-  --text-secondary: #d4d4d8;
-  --text-muted: #a1a1aa;
-  --text-light: #a1a1aa;
-  --nav-pill: #18181b;
-  --border-dark: #3f3f46;
-  --border-light: #27272a;
-  --input-bg: #18181b;
-  --button-primary: #f4f4f5;
-  --button-text: #18181b;
-  --button-subtle-bg: #18181b;
-  --button-subtle-text: #f4f4f5;
-}
-
-[data-theme="dark"] input,
-[data-theme="dark"] textarea {
-  border-radius: 0px;
+  --page-bg: #202124;
+  --surface-1: #292a2d;
+  --surface-2: #333438;
+  --text-main: #e8eaed;
+  --text-secondary: #bdc1c6;
+  --text-muted: #9aa0a6;
+  --text-light: #80868b;
+  --accent: #8ab4f8;
+  --accent-hover: #a8c7fa;
+  --border-light: #3c4043;
+  --border-dark: #5f6368;
+  --shadow-soft: none;
+  --shadow-elevated: 0 8px 26px rgba(0, 0, 0, 0.4);
 }
